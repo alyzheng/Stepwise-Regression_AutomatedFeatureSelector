@@ -5,7 +5,6 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
 
 numerical_columns = user.select_dtypes(include='number')
-
 for col in numerical_columns:
     user[col].fillna(user[col].mean(), inplace=True)
 numerical_columns.isnull().sum()
@@ -52,41 +51,12 @@ y = user['D7_RETENTION']
 
 model = LogisticRegression()
 model.fit(X, y)
-
-
-# In[598]:
-
-
 coefficients = model.coef_[0]
 
-
-# In[599]:
-
-
+#feature importance
 feature_importance = abs(coefficients)
-
-
-# In[600]:
-
-
 feature_importance /= feature_importance.sum()
-
-
-# In[504]:
-
-
 feature_importance_dict = dict(zip(selected_features, feature_importance))
-
-
-# In[505]:
-
-
 for feature, importance in feature_importance_dict.items():
     print(f"{feature}: {importance}")
-
-
-# In[ ]:
-
-
-
 
