@@ -1,43 +1,15 @@
 #!/usr/bin/env python
 # coding: utf-8
-
-# In[ ]:
-
-
 from itertools import combinations
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
 
-
-# In[453]:
-
-
 numerical_columns = user.select_dtypes(include='number')
-
-
-# In[454]:
-
 
 for col in numerical_columns:
     user[col].fillna(user[col].mean(), inplace=True)
-
-
-# In[455]:
-
-
 numerical_columns.isnull().sum()
-
-
-# In[456]:
-
-
 numerical_columns = numerical_columns.drop(columns = ["FIELDEMAILLAST","FIELDIMPRESSIONVALUECOUNT","EVENTPUZZLE_SHUFFLECOUNT", "FIELDACTIONNAMELAST","FIELDUSERLEVELCOUNT", "FIELDUSERLEVELFIRST", "FIELDUSERLEVELLAST"],axis = 1)
-
-
-# In[490]:
-
-
-
 
 def find_best_fitting_features(data, y_variable, k):
     selected_features = []
@@ -69,29 +41,14 @@ def find_best_fitting_features(data, y_variable, k):
     return tuple(selected_features)
 
 
-# In[491]:
-
-
 data = numerical_columns
 y_variable = user['D7_RETENTION']
-
-
-# In[494]:
-
 
 selected_features = find_best_fitting_features(data, y_variable, 10)
 print("Best selected_feature:",selected_features)
 
-
-# In[596]:
-
-
 X = numerical_columns[list(selected_features)]
 y = user['D7_RETENTION']
-
-
-# In[597]:
-
 
 model = LogisticRegression()
 model.fit(X, y)
